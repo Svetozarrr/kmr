@@ -1,0 +1,24 @@
+diff --git docroot/sites/all/modules/contrib/bootstrap_fieldgroup/bootstrap_fieldgroup.module docroot/sites/all/modules/contrib/bootstrap_fieldgroup/bootstrap_fieldgroup.module
+index c48a44f..d5c52af 100644
+--- docroot/sites/all/modules/contrib/bootstrap_fieldgroup/bootstrap_fieldgroup.module
++++ docroot/sites/all/modules/contrib/bootstrap_fieldgroup/bootstrap_fieldgroup.module
+@@ -168,7 +168,7 @@ function bootstrap_fieldgroup_field_group_format_settings($group) {
+ function field_group_pre_render_bootstrap_accordion(&$element, $group, &$form) {
+   $element += array(
+     '#type' => 'markup',
+-    '#prefix' => '<div class="panel-group ' . $group->classes . '" id="' . $element['#id'] . '">',
++    '#prefix' => '<div class="panel-group ' . $group->classes . '" id="' . $group->id . '">',
+     '#suffix' => '</div>',
+   );
+ }
+@@ -189,8 +189,8 @@ function field_group_pre_render_bootstrap_accordion_item(&$element, $group, &$fo
+   $element += array(
+     '#type' => 'markup',
+     '#prefix' => '<div class="panel panel-default ' . $group->classes . '"><div class="panel-heading"><h4 class="panel-title">
+-    <a data-toggle="collapse" data-parent="#' . $group_parent_id . '" href="#' . $element['#id'] . '">' . check_plain(t($group->label)) . '</a>
+-    </h4></div><div id="' . $element['#id'] . '" class="panel-collapse  ' . $group->classes . $collapse . '"><div class="panel-body">',
++    <a data-toggle="collapse" data-parent="#' . $group_parent_id . '" href="#' . $group->id . '">' . check_plain(t($group->label)) . '</a>
++    </h4></div><div id="' . $group->id . '" class="panel-collapse  ' . $group->classes . $collapse . '"><div class="panel-body">',
+     '#suffix' => '</div></div></div>',
+   );
+ }
