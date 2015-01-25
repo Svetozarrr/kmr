@@ -212,7 +212,14 @@
  *   );
  * @endcode
  */
-$databases = array();
+$databases['default']['default'] = array(
+	'driver' => 'mysql',
+	'database' => 'kmr',
+	'username' => 'root',
+	'password' => '',
+	'host' => '127.0.0.1',
+	'collation' => 'utf8_general_ci',
+);
 
 /**
  * Access control for update.php script.
