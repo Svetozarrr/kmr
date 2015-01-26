@@ -5,5 +5,7 @@
  */
 function custom_resolution_process_node(&$variables)
 {
-  dpm($variables);
+  if ($variables['type'] == 'resolution') {
+    dpm($variables);
+  }
 }
