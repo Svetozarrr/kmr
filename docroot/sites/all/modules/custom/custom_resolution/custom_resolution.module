@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implements template_process_node()
+ */
+function custom_resolution_process_node(&$variables)
+{
+  dpm($variables);
+}

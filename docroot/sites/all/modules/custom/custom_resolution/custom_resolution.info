@@ -1,0 +1,5 @@
+name = Custom Resolution
+description = Provide custom function for resolution content type
+version = 7.x-1.0
+core = 7.x
+package = Custom
