@@ -19,3 +19,132 @@ function custom_resolution_process_node(&$variables)
     dpm($variables);
   }
 }
+
+/**
+ *Implements hook_ds_pre_render_alter()
+ */
+function custom_resolution_ds_pre_render_alter(&$layout_render_array, $context, &$vars)
+{
+  dpm($layout_render_array);
+  dpm($context);
+  dpm($vars);
+}
+
+/**
+ * Implements hook_init()
+ */
+function custom_resolution_init()
+{
+  if (isset($_GET['fetch-delegates'])) {
+    _custom_resolution_fetch_delegates();
+  }
+}
+
+function _custom_resolution_fetch_delegates()
+{
+  $delegates_page = file_get_html('http://kmr.gov.ua/delegates.asp');
+  $base_link = "http://kmr.gov.ua/";
+  foreach ($delegates_page->find('a') as $key => $link) {
+    $href = $link->href;
+    if (strpos($href, 'delegates') > -1 && strpos($href, '?') > -1) {
+      $delegate_link = "{$base_link}{$href}";
+      $delegate = _custom_resolution_fetch_delegate($delegate_link);
+      _custom_resolution_save_delegate($delegate, $key);
+    }
+  }
+}
+
+function _custom_resolution_fetch_delegate($delegate_link)
+{
+  $delegate_page = file_get_html($delegate_link);
+  $base_link = "http://kmr.gov.ua/";
+  foreach ($delegate_page->find('span[class=title]') as $title) {
+    $title = iconv('Windows-1251', 'UTF-8', $title->innertext);
+  }
+
+  foreach ($delegate_page->find('img') as $image) {
+    $src = $image->src;
+    if (strpos($src, 'images/person/') > -1) {
+      $delegate_image = $base_link . $src;
+    }
+  }
+
+  foreach ($delegate_page->find('a') as $link) {
+    $href = $link->href;
+    if (strpos($href, 'faction.asp?IdFaction') > -1) {
+      $fraction = iconv('Windows-1251', 'UTF-8', $link->innertext);
+    }
+  }
+  $delegate = array(
+    'title' => $title,
+    'image' => isset($delegate_image) ? $delegate_image : '',
+    'fraction' => $fraction,
+  );
+  return $delegate;
+}
+
+function _custom_resolution_save_delegate($delegate, $key)
+{
+  $title = $delegate['title'];
+  $image_src = $delegate['image'];
+  $fraction = $delegate['fraction'];
+  
+  $node = entity_create('node', array(
+    'title' => $title,
+    'type' => 'deputat',
+    'uid' => 1,
+  ));
+
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  $fraction_id = _custom_resolution_get_fraction_id($fraction);
+  if (isset($node_wrapper->field_fraction)) {
+    $node_wrapper->field_fraction->set($fraction_id);
+  }
+  if ($image_src) {
+    $image_object = _custom_resolution_get_delegate_image($image_src, $key);
+    $fid = $image_object->fid;
+    if (isset($node_wrapper->field_deputat_photo)) {
+      $node_wrapper->field_deputat_photo->file->set($image_object);
+    }
+  }
+  $node_wrapper->save();
+}
+
+function _custom_resolution_get_fraction_id($fraction)
+{
+  $query = db_select('taxonomy_term_data', 'tax');
+  $query->fields('tax', array('tid', 'vid', 'name'));
+  $query->condition('tax.vid', 11);
+  $query->condition('tax.name', db_like($fraction), 'LIKE');
+  $result = $query->execute()->fetchCol();
+
+  $tid = empty($result) ? 51 : $result[0];
+  return $tid;
+}
+
+function _custom_resolution_get_delegate_image($image_src, $key)
+{ 
+  $image = file_get_contents($image_src);
+  $saved_image = FALSE;
+  if ($image) {
+    $headers = get_headers($image_src, 1);
+    $content_type = $headers['Content-Type'];
+    $filebase = 'delegate-' . $key;
+    
+    switch ($content_type) {
+      case 'image/jpeg' :
+        $filename = "{$filebase}.jpg";
+        break;
+
+      case 'image/png' :
+        $filename = "{$filebase}.png";
+        break;
+
+      default :
+        $filename = "{$filebase}.gif";
+    }
+    $destination = "public://deputats/{$filename}";
+    $saved_image = file_save_data($image, $destination, FILE_EXISTS_REPLACE);
+  }
+  return $saved_image;
+}
