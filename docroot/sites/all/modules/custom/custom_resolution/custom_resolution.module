@@ -16,7 +16,6 @@ function custom_resolution_process_node(&$variables)
       '@date' => $resolution_date_formatted,
     ));
     $variables['title'];
-    dpm($variables);
   }
 }
 
@@ -25,9 +24,9 @@ function custom_resolution_process_node(&$variables)
  */
 function custom_resolution_ds_pre_render_alter(&$layout_render_array, $context, &$vars)
 {
-  dpm($layout_render_array);
-  dpm($context);
-  dpm($vars);
+  // dpm($layout_render_array);
+  // dpm($context);
+  // dpm($vars);
 }
 
 /**
