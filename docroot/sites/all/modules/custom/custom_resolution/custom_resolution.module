@@ -7,5 +7,10 @@ function custom_resolution_process_node(&$variables)
 {
   if ($variables['type'] == 'resolution') {
     dpm($variables);
+    $resolution_date = $variables['field_resolution_date'];
+    $resolution_date_value = $resolution_date[LANGUAGE_NONE][0]['value'];
+    $resolution_timestamp = time($resolution_date_value);
+    $resolution_date_formatted = format_date($resolution_timestamp, 'short');
+    dpm($resolution_date_formatted);
   }
 }
