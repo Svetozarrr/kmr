@@ -15,6 +15,7 @@ function custom_resolution_process_node(&$variables)
       '@title' => $variables['title'],
       '@date' => $resolution_date_formatted,
     ));
+    $variables['title'];
     dpm($variables);
   }
 }
