@@ -19,8 +19,13 @@ function custom_resolution_form_resolution_node_form_alter(&$form, &$form_state,
   /* Hide node title field - it will be generated on node saving */
   $form['title']['#access'] = FALSE;
   $form['title']['#required'] = FALSE;
+  $form['#validate'][] = '_custom_resolution_validate_resolution_number';
 }
 
+/**
+ * Get list of parties for filter on resolution node form
+ * @return array
+ */
 function _custom_resolution_get_parties()
 {
   $query = db_select('taxonomy_term_data', 'tax');
@@ -49,6 +54,37 @@ function custom_resolution_node_presave($node)
   ));
   $node->title = $resolution_title;
 }
+
+
+/**
+ * Validation callback for resolution node form
+ * Check if resolution number is unique
+ */
+function _custom_resolution_validate_resolution_number($form, &$form_state)
+{
+  $values = $form_state['values'];
+  $current_nid = $values['nid'];
+  $resolution_number_field = $values['field_resolution_number'];
+  $resolution_number_value = $resolution_number_field[LANGUAGE_NONE][0]['value'];
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node');
+  $query->entityCondition('bundle', 'resolution');
+  $query->fieldCondition('field_resolution_number', 'value', $resolution_number_value);
+  $query->addMetaData('account', user_load(1));
+  $result = $query->execute();
+  if (!empty($result)) {
+    $nids = element_children($result['node']);
+    if (!$current_nid || !in_array($current_nid, $nids)) {
+      form_error($form['field_resolution_number'], 
+        t('Resolution # %number already exists', array(
+          '%number' => $resolution_number_value,
+        )));
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 
 /**
  * Parsing list of Kyiv city council delegates
