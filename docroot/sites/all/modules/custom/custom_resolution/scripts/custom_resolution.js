@@ -10,6 +10,9 @@
     partiesFilter.change(filterDelegates);
     partyDelegateCheckbox.each(hideCheckedDelegates);
     partyDelegateCheckbox.click(hideCheckedDelegates);
+    partyDelegateCheckbox.click(function() {
+      firstCall = false;
+    });
   });
 
   function filterDelegates() {
@@ -30,7 +33,6 @@
   }
 
   function hideCheckedDelegates() {
-    var firstCall = false;
     var anotherTabs = $(this).parents('.field-group-tab').siblings();
     var checkedDelegate = $(this).next().text();
     var anotherTabsCheckboxes = anotherTabs.find('.form-checkbox');
@@ -46,9 +48,9 @@
     } else {
       anotherTabsCheckboxes.each(function() {
         var checkBoxText = $(this).next().text();
-        if (checkBoxText === checkedDelegate && firstCall) {
+        if (checkBoxText === checkedDelegate && !firstCall) {
           var formItem = $(this).parent();
-          formItem.hide();
+          formItem.show();
           formItem.removeClass('already-checked');
         }
       });
