@@ -1,35 +1,6 @@
 <?php
 
 /**
- * Implements template_process_node()
- */
-function custom_resolution_process_node(&$variables)
-{
-  if ($variables['type'] == 'resolution') {
-    $resolution_date = $variables['field_resolution_date'];
-    $resolution_date_value = $resolution_date[LANGUAGE_NONE][0]['value'];
-    $resolution_timestamp = time($resolution_date_value);
-    $resolution_date_formatted = format_date($resolution_timestamp, 'short');
-    dpm($resolution_date_formatted);
-    $variables['title'] = t('Resolution # @title from @date', array(
-      '@title' => $variables['title'],
-      '@date' => $resolution_date_formatted,
-    ));
-    $variables['title'];
-  }
-}
-
-/**
- *Implements hook_ds_pre_render_alter()
- */
-function custom_resolution_ds_pre_render_alter(&$layout_render_array, $context, &$vars)
-{
-  // dpm($layout_render_array);
-  // dpm($context);
-  // dpm($vars);
-}
-
-/**
  * Implements hook_form_FORM_ID_alter()
  */
 function custom_resolution_form_resolution_node_form_alter(&$form, &$form_state, $form_id)
@@ -44,6 +15,10 @@ function custom_resolution_form_resolution_node_form_alter(&$form, &$form_state,
   $module_path = drupal_get_path('module', 'custom_resolution');
   $script_path = "{$module_path}/scripts/custom_resolution.js";
   drupal_add_js($script_path);
+
+  /* Hide node title field - it will be generated on node saving */
+  $form['title']['#access'] = FALSE;
+  $form['title']['#required'] = FALSE;
 }
 
 function _custom_resolution_get_parties()
@@ -57,6 +32,22 @@ function _custom_resolution_get_parties()
     $parties[$party] = $party;
   }
   return $parties;
+}
+
+/**
+ * Implements hook_node_presave()
+ */
+function custom_resolution_node_presave($node)
+{
+  $resolution_number = $node->field_resolution_number[LANGUAGE_NONE][0]['value'];
+  $resolution_date = $node->field_resolution_date[LANGUAGE_NONE][0]['value'];
+  $resolution_time = time($resolution_date);
+  $resolution_date_formatted = format_date($resolution_time, 'short');
+  $resolution_title = t('Resolution # @number for @date', array(
+    '@number' => $resolution_number,
+    '@date' => $resolution_date_formatted,
+  ));
+  $node->title = $resolution_title;
 }
 
 /**
