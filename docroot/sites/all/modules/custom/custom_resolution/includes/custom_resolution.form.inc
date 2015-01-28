@@ -8,7 +8,8 @@ function custom_resolution_filters_form($form, &$form_state)
     '#title' => t('Resolution number'),
     '#type' => 'textfield',
     '#size' => 30,
-    '#default_value' => $_GET['field_resolution_number_value'],
+    '#default_value' => isset($_GET['field_resolution_number_value']) ?
+      $_GET['field_resolution_number_value'] : '',
   );
 
   $form['field_resolution_date_value'] = array(
@@ -17,7 +18,7 @@ function custom_resolution_filters_form($form, &$form_state)
     'value' => array(
       '#type' => 'date_popup',
       '#size' => 20,
-      '#default_value' => $_GET['field_resolution_date_value'],
+      '#default_value' => isset($_GET['field_resolution_date_value']),
       '#date_format' => 'd.m.Y',
       '#date_label_position' => 'within',
       '#date_year_range' => '-3:+3',
