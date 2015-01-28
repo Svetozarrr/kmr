@@ -58,6 +58,7 @@ function custom_resolution_filters_form($form, &$form_state)
  */
 function custom_resolution_form_alter(&$form, &$form_state, $form_id)
 {
+  dpm($form_id);
   if ($form_id == 'views_exposed_form') {
     $id = $form['#id'];
     $resolution_form_id_string = 'views-exposed-form-resolutions-block';
