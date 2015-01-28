@@ -65,7 +65,7 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
     if (strpos($id, $resolution_form_id_string) > -1) {
       // hide($form);
     }
-    dpm($form);
+    dpm($form_state);
   }
 }
 
