@@ -68,6 +68,7 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
       }
       else {
         dpm($form);
+        $form['#submit'][0] = 'custom_resolution_filters_form_submit';
       }
     }
   }
@@ -164,4 +165,9 @@ function _custom_resolution_get_categories()
   }
 
   return $categories;
+}
+
+function custom_resolution_filters_form_submit($form, &$form_state)
+{
+  dpm($form_state);
 }
