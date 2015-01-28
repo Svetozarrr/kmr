@@ -7,6 +7,11 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
 {
   dpm($form_id);
   if ($form_id == 'views_exposed_form') {
+    $id = $form['#id'];
+    $resolution_form_id_string = 'views-exposed-form-resolutions';
+    if (strpos($id, $resolution_form_id_string) > -1) {
+      $form['#access'] = FALSE;
+    }
     dpm($form);
   }
 }
