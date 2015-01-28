@@ -66,6 +66,9 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
       if (!isset($form_state['visible'])) {
         hide($form);
       }
+      else {
+        dpm($form);
+      }
     }
   }
 }
