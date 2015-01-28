@@ -43,4 +43,5 @@ function _custom_resolution_get_exposed_filters()
   );
   $form = drupal_build_form('views_exposed_form', $exposed_form_state);
   $rendered_form = render($form);
+  return $rendered_form;
 }
