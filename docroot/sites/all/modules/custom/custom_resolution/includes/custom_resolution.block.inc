@@ -17,8 +17,8 @@ function custom_resolution_block_info()
  */
 function custom_resolution_block_view($delta = '')
 {
+  $block = array();
   switch ($delta) {
-    $block = array();
     case 'custom_resolutions_filters_block' :
       $block['subject'] = t('Resolution filters block');
       $block['content'] = drupal_get_form('custom_resolution_filters_form');
