@@ -64,9 +64,10 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
     $id = $form['#id'];
     $resolution_form_id_string = 'views-exposed-form-resolutions-block';
     if (strpos($id, $resolution_form_id_string) > -1) {
-      hide($form);
+      // hide($form);
     }
   }
+  dpm($form);
 }
 
 /**
