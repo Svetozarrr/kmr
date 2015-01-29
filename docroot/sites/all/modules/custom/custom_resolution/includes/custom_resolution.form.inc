@@ -63,12 +63,7 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
     $id = $form['#id'];
     $resolution_form_id_string = 'views-exposed-form-resolutions-block';
     if (strpos($id, $resolution_form_id_string) > -1) {
-      if (!isset($form_state['visible'])) {
-        hide($form);
-      }
-      else {
-        $form['#submit'][0] = 'custom_resolution_filters_form_submit';
-      }
+      hide($form);
     }
   }
 }
@@ -164,10 +159,4 @@ function _custom_resolution_get_categories()
   }
 
   return $categories;
-}
-
-function custom_resolution_filters_form_submit($form, &$form_state)
-{
-  drupal_goto('resolution');
-  dpm($form_state);
 }
