@@ -12,23 +12,23 @@ function custom_resolution_filters_form($form, &$form_state)
       $_GET['field_resolution_number_value'] : '',
   );
 
-  $form['field_resolution_date_value'] = array(
-    '#title' => t('Resolution date'),
-    '#tree' => TRUE,
-    'value' => array(
-      '#type' => 'date_popup',
-      '#size' => 20,
-      '#default_value' => isset($_GET['field_resolution_date_value']) ? 
-        $_GET['field_resolution_date_value'] : '',
-      '#date_format' => 'd.m.Y',
-      '#date_label_position' => 'within',
-      '#date_year_range' => '-3:+3',
-      '#process' => 'date_popup_element_process',
-      '#prefix' => '<div id="edit-field-resolution-date-value-value-wrapper">
-        <div id="edit-field-resolution-date-value-value-inside-wrapper">',
-      '#suffix' => '</div></div>',
-    ),
-  );
+  // $form['field_resolution_date_value'] = array(
+  //   '#title' => t('Resolution date'),
+  //   '#tree' => TRUE,
+  //   'value' => array(
+  //     '#type' => 'date_popup',
+  //     '#size' => 20,
+  //     '#default_value' => isset($_GET['field_resolution_date_value']) ? 
+  //       $_GET['field_resolution_date_value'] : '',
+  //     '#date_format' => 'd.m.Y',
+  //     '#date_label_position' => 'within',
+  //     '#date_year_range' => '-3:+3',
+  //     '#process' => 'date_popup_element_process',
+  //     '#prefix' => '<div id="edit-field-resolution-date-value-value-wrapper">
+  //       <div id="edit-field-resolution-date-value-value-inside-wrapper">',
+  //     '#suffix' => '</div></div>',
+  //   ),
+  // );
 
   $form['field_resolution_full_name_value'] = array(
     '#title' => t('Resolution full name'),
@@ -42,8 +42,8 @@ function custom_resolution_filters_form($form, &$form_state)
     '#title' => t('Resolution category'),
     '#type' => 'select',
     '#options' => _custom_resolution_get_categories(),
-    '#default_value' => isset($_GET['field_resolution_full_name_value']) ?
-      $_GET['field_resolution_full_name_value'] : '',
+    '#default_value' => isset($_GET['field_resolution_category_tid']) ?
+      $_GET['field_resolution_category_tid'] : '',
   );
 
   $form['submit'] = array(
@@ -54,6 +54,8 @@ function custom_resolution_filters_form($form, &$form_state)
 
   $form['#action'] = '';
   $form['#method'] = 'get';
+  $form['#after_build'][] = '_custom_resolution_clear_get_parameters';
+  $form_state['method'] = 'get';
   return $form;
 }
 
@@ -162,4 +164,16 @@ function _custom_resolution_get_categories()
   }
 
   return $categories;
+}
+
+/**
+ * After build callback for custom resolution filters form
+ */
+function _custom_resolution_clear_get_parameters($form)
+{
+  unset($form['form_token']);
+  unset($form['form_build_id']);
+  unset($form['form_id']);
+  $form['submit']['#name'] = '';
+  return $form;
 }
