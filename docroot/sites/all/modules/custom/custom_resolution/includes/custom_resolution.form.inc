@@ -67,8 +67,10 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
         hide($form);
       }
       else {
-        dpm($form);
         $form['#submit'][0] = 'custom_resolution_filters_form_submit';
+        dpm($form);
+        dpm($form_state);
+        dpm($form_state['display']);
       }
     }
   }
