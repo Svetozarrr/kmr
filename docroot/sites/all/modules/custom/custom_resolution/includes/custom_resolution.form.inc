@@ -18,7 +18,8 @@ function custom_resolution_filters_form($form, &$form_state)
     'value' => array(
       '#type' => 'date_popup',
       '#size' => 20,
-      '#default_value' => isset($_GET['field_resolution_date_value']),
+      '#default_value' => isset($_GET['field_resolution_date_value']) ? 
+        $_GET['field_resolution_date_value'] : '',
       '#date_format' => 'd.m.Y',
       '#date_label_position' => 'within',
       '#date_year_range' => '-3:+3',
@@ -33,14 +34,16 @@ function custom_resolution_filters_form($form, &$form_state)
     '#title' => t('Resolution full name'),
     '#type' => 'textfield',
     '#size' => 30,
-    '#default_value' => $_GET['field_resolution_full_name_value'],
+    '#default_value' => isset($_GET['field_resolution_full_name_value']) ?
+      $_GET['field_resolution_full_name_value'] : '',
   );
 
   $form['field_resolution_category_tid'] = array(
     '#title' => t('Resolution category'),
     '#type' => 'select',
     '#options' => _custom_resolution_get_categories(),
-    '#default_value' => $_GET['field_resolution_full_name_value'],
+    '#default_value' => isset($_GET['field_resolution_full_name_value']) ?
+      $_GET['field_resolution_full_name_value'] : '',
   );
 
   $form['submit'] = array(
@@ -49,7 +52,7 @@ function custom_resolution_filters_form($form, &$form_state)
     '#value' => t('Search'),
   );
 
-  $form['#action'] = current_path();
+  $form['#action'] = '';
   $form['#method'] = 'get';
   return $form;
 }
