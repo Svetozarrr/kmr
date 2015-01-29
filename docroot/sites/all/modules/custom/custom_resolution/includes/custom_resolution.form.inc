@@ -68,9 +68,6 @@ function custom_resolution_form_alter(&$form, &$form_state, $form_id)
       }
       else {
         $form['#submit'][0] = 'custom_resolution_filters_form_submit';
-        dpm($form);
-        dpm($form_state);
-        dpm($form_state['display']);
       }
     }
   }
@@ -171,5 +168,6 @@ function _custom_resolution_get_categories()
 
 function custom_resolution_filters_form_submit($form, &$form_state)
 {
+  drupal_goto('resolution');
   dpm($form_state);
 }
