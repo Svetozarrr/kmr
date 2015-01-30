@@ -12,24 +12,6 @@ function custom_resolution_filters_form($form, &$form_state)
       $_GET['field_resolution_number_value'] : '',
   );
 
-  // $form['field_resolution_date_value'] = array(
-  //   '#title' => t('Resolution date'),
-  //   '#tree' => TRUE,
-  //   'value' => array(
-  //     '#type' => 'date_popup',
-  //     '#size' => 20,
-  //     '#default_value' => isset($_GET['field_resolution_date_value']) ? 
-  //       $_GET['field_resolution_date_value'] : '',
-  //     '#date_format' => 'd.m.Y',
-  //     '#date_label_position' => 'within',
-  //     '#date_year_range' => '-3:+3',
-  //     '#process' => 'date_popup_element_process',
-  //     '#prefix' => '<div id="edit-field-resolution-date-value-value-wrapper">
-  //       <div id="edit-field-resolution-date-value-value-inside-wrapper">',
-  //     '#suffix' => '</div></div>',
-  //   ),
-  // );
-
   $form['field_resolution_full_name_value'] = array(
     '#title' => t('Resolution full name'),
     '#type' => 'textfield',
