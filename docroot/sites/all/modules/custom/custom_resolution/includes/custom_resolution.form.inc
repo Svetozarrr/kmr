@@ -1,61 +1,5 @@
 <?php
 /**
- * Build custom resolution filters form
- */
-function custom_resolution_filters_form($form, &$form_state)
-{
-  $form['field_resolution_number_value'] = array(
-    '#title' => t('Resolution number'),
-    '#type' => 'textfield',
-    '#size' => 30,
-    '#default_value' => isset($_GET['field_resolution_number_value']) ?
-      $_GET['field_resolution_number_value'] : '',
-  );
-
-  $form['field_resolution_full_name_value'] = array(
-    '#title' => t('Resolution full name'),
-    '#type' => 'textfield',
-    '#size' => 30,
-    '#default_value' => isset($_GET['field_resolution_full_name_value']) ?
-      $_GET['field_resolution_full_name_value'] : '',
-  );
-
-  $form['field_resolution_category_tid'] = array(
-    '#title' => t('Resolution category'),
-    '#type' => 'select',
-    '#options' => _custom_resolution_get_categories(),
-    '#default_value' => isset($_GET['field_resolution_category_tid']) ?
-      $_GET['field_resolution_category_tid'] : '',
-  );
-
-  $form['submit'] = array(
-    '#name' => '',
-    '#type' => 'submit',
-    '#value' => t('Search'),
-  );
-
-  $form['#action'] = '';
-  $form['#method'] = 'get';
-  $form['#after_build'][] = '_custom_resolution_clear_get_parameters';
-  $form_state['method'] = 'get';
-  return $form;
-}
-
-/**
- * Implements hook_form_alter()
- */
-function custom_resolution_form_alter(&$form, &$form_state, $form_id)
-{
-  if ($form_id == 'views_exposed_form') {
-    $id = $form['#id'];
-    $resolution_form_id_string = 'views-exposed-form-resolutions-block';
-    if (strpos($id, $resolution_form_id_string) > -1) {
-      // hide($form);
-    }
-  }
-}
-
-/**
  * Implements hook_form_FORM_ID_alter()
  */
 function custom_resolution_form_resolution_node_form_alter(&$form, &$form_state, $form_id)
@@ -120,42 +64,4 @@ function _custom_resolution_validate_resolution_number($form, &$form_state)
         )));
     }
   }
-}
-
-/**
- * Get list of resolution categories term
- * @return array
- */
-function _custom_resolution_get_categories()
-{
-  $vocabulary = taxonomy_vocabulary_machine_name_load('resolution_categories');
-  $vid = $vocabulary->vid;
-  $query = db_select('taxonomy_term_data', 'tax');
-  $query->fields('tax', array('tid', 'name', 'vid'));
-  $query->condition('tax.vid', $vid);
-  $result = $query->execute()->fetchAll();
-
-  $categories = array(
-    'All' => t('- All categories -'),
-  );
-  
-  foreach ($result as $row) {
-    $tid = $row->tid;
-    $name = $row->name;
-    $categories[$tid] = $name;
-  }
-
-  return $categories;
-}
-
-/**
- * After build callback for custom resolution filters form
- */
-function _custom_resolution_clear_get_parameters($form)
-{
-  unset($form['form_token']);
-  unset($form['form_build_id']);
-  unset($form['form_id']);
-  $form['submit']['#name'] = '';
-  return $form;
 }
