@@ -17,6 +17,11 @@ function custom_resolution_preprocess_views_view(&$vars)
   }
 }
 
+/**
+ * Count of total votes of delegates from fraction
+ * @param $tid - taxonomy term id of current fraction
+ * @return int - number of total votes
+ */
 function _custom_resolution_count_supported_resolutions($tid)
 {
   $query = new EntityFieldQuery();
