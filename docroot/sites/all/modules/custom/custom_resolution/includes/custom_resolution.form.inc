@@ -15,6 +15,9 @@ function custom_resolution_form_resolution_node_form_alter(&$form, &$form_state,
   $script_path = "{$module_path}/scripts/custom_resolution.js";
   drupal_add_js($script_path);
 
+  /* Hide node title field - it will be generated on node saving */
+  $form['title']['#access'] = FALSE;
+  $form['title']['#required'] = FALSE;
   $form['#validate'][] = '_custom_resolution_validate_resolution_number';
 }
 
@@ -41,6 +44,9 @@ function _custom_resolution_get_parties()
  */
 function _custom_resolution_validate_resolution_number($form, &$form_state)
 {
+  $module_path = drupal_get_path('module', 'custom_resolution');
+  $script_path = "{$module_path}/scripts/custom_resolution.js";
+  drupal_add_js($script_path);
   $values = $form_state['values'];
   $current_nid = $values['nid'];
   $resolution_number_field = $values['field_resolution_number'];
