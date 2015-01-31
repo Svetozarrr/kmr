@@ -1,0 +1,4 @@
+name = Custom Majority District
+description = Provide custom functions for majority_district bundle
+package = Custom
+core = 7.x
