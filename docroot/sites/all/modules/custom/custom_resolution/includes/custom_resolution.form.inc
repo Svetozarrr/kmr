@@ -15,9 +15,6 @@ function custom_resolution_form_resolution_node_form_alter(&$form, &$form_state,
   $script_path = "{$module_path}/scripts/custom_resolution.js";
   drupal_add_js($script_path);
 
-  /* Hide node title field - it will be generated on node saving */
-  $form['title']['#access'] = FALSE;
-  $form['title']['#required'] = FALSE;
   $form['#validate'][] = '_custom_resolution_validate_resolution_number';
 }
 
