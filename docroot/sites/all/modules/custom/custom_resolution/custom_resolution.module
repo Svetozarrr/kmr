@@ -1,8 +1,6 @@
 <?php
-
-module_load_include('inc', 'custom_resolution', '/includes/custom_resolution.form');
-module_load_include('inc', 'custom_resolution', '/includes/custom_resolution.node');
-module_load_include('inc', 'custom_resolution', '/includes/custom_resolution.views');
+module_load_include('inc', 'custom_resolution', 'includes/custom_resolution.form');
+module_load_include('inc', 'custom_resolution', 'includes/custom_resolution.node');
 
 //-----------------------------------------------------------------------------
 
