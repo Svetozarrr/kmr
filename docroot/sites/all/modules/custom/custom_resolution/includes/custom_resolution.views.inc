@@ -14,7 +14,7 @@ function custom_resolution_preprocess_views_view(&$vars)
       $total_votes = _custom_resolution_count_supported_resolutions($tid);
       $total_votes_string = t('Total resolutions supported - @total_votes', 
         array('@total_votes' => $total_votes));
-      $vars['header'] = $total_votes_string;
+      // $vars['header'] = $total_votes_string;
     }
   }
 }
