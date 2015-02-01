@@ -1,3 +1,3 @@
 <?php
-module_load_include('inc', 'custom_majority_district', 'custom_majority_district.form');
-module_load_include('inc', 'custom_majority_district', 'custom_majority_district.node');
+module_load_include('inc', 'custom_majority_district', 'includes/custom_majority_district.form');
+module_load_include('inc', 'custom_majority_district', 'includes/custom_majority_district.node');

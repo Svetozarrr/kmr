@@ -6,4 +6,5 @@
 function custom_majority_district_form_majority_district_form_alter(&$form, &$form_state, $form_id)
 {
   $form['title']['#access'] = FALSE;
+  $form['title']['#required'] = FALSE;
 }
