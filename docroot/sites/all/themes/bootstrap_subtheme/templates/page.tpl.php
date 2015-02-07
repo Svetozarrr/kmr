@@ -78,7 +78,7 @@
     <div class="navbar-header row">
       <?php if ($logo): ?>
       <div class="logo-container col-sm-4">
-        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+        <a class="logo" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
           <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
           <?php if (!empty($site_slogan)): ?>
             <p class="lead"><?php print $site_slogan; ?></p>
