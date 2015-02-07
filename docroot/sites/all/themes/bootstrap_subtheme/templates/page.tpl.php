@@ -81,7 +81,7 @@
         <a class="logo" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
           <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
           <?php if (!empty($site_slogan)): ?>
-            <p class="lead"><?php print $site_slogan; ?></p>
+            <h2 class="lead"><?php print $site_slogan; ?></h2>
           <?php endif; ?>
         </a>
       </div>
@@ -89,7 +89,7 @@
 
       <?php if (!empty($site_name)): ?>
         <div class="site-name-container col-sm-9">
-          <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+          <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><h1 id="site-name"><?php print $site_name; ?></h1></a>
         </div>
       <?php endif; ?>
 
