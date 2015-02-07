@@ -75,9 +75,9 @@
 ?>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
   <div class="container">
-    <div class="navbar-header row">
+    <div class="row">
       <?php if ($logo): ?>
-      <div class="logo-container col-sm-4">
+      <div class="logo-container col-sm-3">
         <a class="logo" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
           <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
           <?php if (!empty($site_slogan)): ?>
@@ -88,7 +88,7 @@
       <?php endif; ?>
 
       <?php if (!empty($site_name)): ?>
-        <div class="site-name-container col-sm-8">
+        <div class="site-name-container col-sm-9">
           <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
         </div>
       <?php endif; ?>
