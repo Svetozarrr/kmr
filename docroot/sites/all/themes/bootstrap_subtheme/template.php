@@ -10,9 +10,7 @@
  */
 function bootstrap_subtheme_preprocess_html(&$variables)
 {
-  dpm($variables);
   $head_title = &$variables['head_title'];
   $head_title = htmlspecialchars_decode($head_title);
   $head_title = strip_tags($head_title);
-  dpm($head_title);
 }
