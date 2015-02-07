@@ -81,7 +81,7 @@
         <a class="logo" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
           <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
           <?php if (!empty($site_slogan)): ?>
-            <h2 class="lead"><?php print $site_slogan; ?></h2>
+            <h2 class="site-slogan"><?php print $site_slogan; ?></h2>
           <?php endif; ?>
         </a>
       </div>
