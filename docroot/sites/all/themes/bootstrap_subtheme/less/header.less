@@ -15,9 +15,6 @@
     line-height: 58px;
     margin-top: -7px;
   }
-  .logo-container {
-    border-right: #003e80 5px solid;
-  }
   #site-slogan {
     color: #003e80;
     display: inline-block;
@@ -28,12 +25,21 @@
     text-align: right;
     text-transform: uppercase;
     width: 95px;
+    position: relative;
     .slogan-big {
       font-size: 29px;
       line-height: 24px;
     }
     .slogan-small {
       font-size: 11px;
+    }
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      right: 0;
+      height: 100%;
+      width: 5px;
     }
   }
 }
